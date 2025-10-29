@@ -115,9 +115,13 @@ impl UI {
     }
 
     fn show_window(&mut self, ctx: &egui::Context) {
-        // get current mouse position
+        let scale_factor = ctx.pixels_per_point();
         let (mouse_x, mouse_y) = match Mouse::get_mouse_position() {
-            Mouse::Position { x, y } => (x as f32, y as f32),
+            Mouse::Position { x, y } => {
+                let scaled_x = (x as f32) / scale_factor;
+                let scaled_y = (y as f32) / scale_factor;
+                (scaled_x, scaled_y)
+            }
             _ => (0.0, 0.0),
         };
 
